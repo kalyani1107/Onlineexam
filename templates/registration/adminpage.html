@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+        <style>
+            table, th, td {
+                border: 1px solid black;
+                border-collapse: collapse;
+            }
+        
+        </style>
+    
+</head>
+<body>
+    
+    <center>    
+    <form action="adminform" method="post"  id="frm1">
+    <table>
+    <tr>
+    <th><input type="checkbox"  onclick="checkedAll(frm1)"></th>
+    <th>firstname</th>
+    <th>lastname</th>
+    <th>gender</th>
+    <th>course</th>        
+    </tr>
+    {% for i in users %}
+    {% if i.status == 'pending' %}
+   
+    <tr>
+        <td> <input type='checkbox'name='chk' id="approval" onclick="approval()" value="{{i.pk}}"></td>
+        <td>{{i.firstname}}</td>
+        <td>{{i.lastname}}</td>
+        <td>{{i.gender}}</td>
+        <td>{{i.course}}</td>       
+    </tr>
+    {% endif %}
+       {% endfor %}
+    </table>
+    </form>
+    </center>
+        
+    <center>
+      <form action="userrequest"  method="post" >
+        {% csrf_token %}
+    <button name="approvebtn" onclick ="readcheckboxes()">approve</button><br><br>
+    <button name="rejectbtn" onclick ="readcheckboxes()">reject</button> <br><br></center>
+     
+        
+    <script>
+    check=false;
+    function checkedAll (frm1) {
+    var x= document.getElementById('frm1');
+               if ( check== false)
+                  {
+                    check= true
+                  }
+                else
+                  {
+                    check= false
+                  }
+            for (var i =0; i < x.length; i++) 
+            {
+             x[i].checked = check;
+            }
+              }
+              function readcheckboxes()
+    {
+        let checkboxes = document.getElementsByName('chk');
+       
+        for(let i=0;i<checkboxes.length;i++)
+        {
+            if(checkboxes[i].checked == true)
+            {
+                let elechk = document.getElementById('chk').value;
+                console.log(elechk)
+            }
+        }
+    }
+        
+    </script>
+    <script>
+      function approval(){
+        let k = document.getElementById('approval');
+        for(let i=0;i<k.length;i++)
+        {
+            if(k[i].checked == true)
+            {
+                let elechk = document.getElementById('approval').value;
+                console.log(elechk)
+            }
+        }
+
+      }
+    </script>
+    </body>
+    
